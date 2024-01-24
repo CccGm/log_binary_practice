@@ -1,14 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import NoDataFound from '../common/NoDataFound';
 import ReduceData from '../common/ReduceData';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import ReduceHiddenData from '../common/ReduceHiddenData';
+import ContextApi from '../context/ContextApi';
+import Indicator from '../common/ActivityIndicator';
 
-const SwipDelete = ({array, buttonClick, DeleteData}) => {
+const SwipDelete = () => {
+  const {array, DeleteData, AxiosCall, loading} = useContext(ContextApi);
+
   return (
     <View style={{flex: 1}}>
-      {array == null || '' ? (
+      {loading == true ? (
+        <Indicator />
+      ) : array == null || '' ? (
         <NoDataFound />
       ) : (
         <SwipeListView
@@ -46,7 +52,7 @@ const SwipDelete = ({array, buttonClick, DeleteData}) => {
             borderRadius: 12,
             backgroundColor: '#50575680',
           }}
-          onPress={() => buttonClick()}>
+          onPress={() => AxiosCall()}>
           <Text style={{fontSize: 18, color: 'white'}}>Api Call</Text>
         </TouchableOpacity>
       </View>

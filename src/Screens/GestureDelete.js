@@ -1,12 +1,18 @@
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import NoDataFound from '../common/NoDataFound';
 import ReduceData from '../common/ReduceData';
+import ContextApi from '../context/ContextApi';
+import Indicator from '../common/ActivityIndicator';
 
-const GestureDelete = ({array, buttonClick, DeleteData}) => {
+const GestureDelete = () => {
+  const {array, DeleteData, AxiosCall, loading} = useContext(ContextApi);
+
   return (
     <View style={{flex: 1}}>
-      {array == null || '' ? (
+      {loading == true ? (
+        <Indicator />
+      ) : array == null || '' ? (
         <NoDataFound />
       ) : (
         <FlatList
@@ -33,7 +39,7 @@ const GestureDelete = ({array, buttonClick, DeleteData}) => {
             borderRadius: 12,
             backgroundColor: '#50575680',
           }}
-          onPress={() => buttonClick()}>
+          onPress={() => AxiosCall()}>
           <Text style={{fontSize: 18, color: 'white'}}>Api Call</Text>
         </TouchableOpacity>
       </View>
