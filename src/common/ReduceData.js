@@ -43,6 +43,7 @@ const ReduceData = ({data, onSwipe}) => {
         paddingLeft: 20,
         paddingVertical: 10,
         marginVertical: 5,
+        height: 100,
       }}>
       <Text>
         ID : {'               '}
