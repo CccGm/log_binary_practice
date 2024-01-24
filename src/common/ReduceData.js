@@ -16,6 +16,20 @@ const ReduceData = ({data, onSwipe}) => {
     return formattedToday;
   };
 
+  function isPrime(number) {
+    if (number < 2) {
+      return 'false';
+    }
+
+    for (let i = 2; i <= Math.sqrt(number); i++) {
+      if (number % i === 0) {
+        return 'false';
+      }
+    }
+
+    return 'true';
+  }
+
   return (
     <GestureRecognizer
       onSwipeLeft={() => onSwipe(data.order_id)}
@@ -30,10 +44,25 @@ const ReduceData = ({data, onSwipe}) => {
         paddingVertical: 10,
         marginVertical: 5,
       }}>
-      <Text>ID : {data.order_id}</Text>
-      <Text>Seq No :{data.sequence_no}</Text>
-      <Text>Order Type :{data.order_type}</Text>
-      <Text>Date : {DATE(data.expected_date)}</Text>
+      <Text>
+        ID : {'               '}
+        {data.order_id}
+      </Text>
+      <Text>
+        Seq No :{'       '}
+        {data.sequence_no} {'   -->   '}
+        <Text style={{fontSize: 14, color: '#465315'}}>
+          {' '}
+          IsPrime : {isPrime(data.sequence_no)}
+        </Text>
+      </Text>
+      <Text>
+        Type :{'           '}
+        {data.order_type}
+      </Text>
+      <Text>
+        Date :{'           '} {DATE(data.expected_date)}
+      </Text>
     </GestureRecognizer>
   );
 };
