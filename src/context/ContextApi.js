@@ -20,6 +20,7 @@ export const ContextProvider = ({children}) => {
         'https://qaadmin.onzway.com/apis/get-orders-v3.json',
 
         {restaurant_id: '1', status: 4, page: 1, search: 'abc'},
+        {timeout: 8000},
       )
       .then(function (response) {
         setArray(response.data.data.orderInfo.orders);

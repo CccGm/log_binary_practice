@@ -1,43 +1,11 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useContext, useEffect, useState} from 'react';
-import NoDataFound from '../common/NoDataFound';
-import axios from 'axios';
-import Indicator from '../common/ActivityIndicator';
+import React, {useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import ContextApi from '../context/ContextApi';
 
 const HomeScreen = () => {
-  const {array, setArray, loading, setLoading} = useContext(ContextApi);
+  const {loading} = useContext(ContextApi);
   const navigation = useNavigation();
-
-  // useEffect(() => {
-  //   AxiosCall();
-  // }, []);
-
-  // const AxiosCall = async () => {
-  //   setLoading(true);
-  //   await axios
-  //     .post(
-  //       'https://qaadmin.onzway.com/apis/get-orders-v3.json',
-
-  //       {restaurant_id: '1', status: 4, page: 1, search: 'abc'},
-  //     )
-  //     .then(function (response) {
-  //       setArray(response.data.data.orderInfo.orders);
-  //       setLoading(false);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //       setLoading(false);
-  //     });
-  // };
-
-  // const DeleteData = id => {
-  //   const newData = [...array];
-  //   const prevIndex = array.findIndex(item => item.order_id === id);
-  //   newData.splice(prevIndex, 1);
-  //   setArray(newData);
-  // };
 
   return (
     <View style={{flex: 1}}>
@@ -87,6 +55,16 @@ const HomeScreen = () => {
             Swipe Delete
           </Text>
         </TouchableOpacity>
+        {loading ? (
+          <Text
+            style={{
+              color: 'blue',
+              fontSize: 16,
+              marginTop: 30,
+            }}>
+            Data Is Loading .....
+          </Text>
+        ) : null}
       </View>
     </View>
   );

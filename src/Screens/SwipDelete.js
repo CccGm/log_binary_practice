@@ -1,14 +1,15 @@
 import React, {useContext} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
 import NoDataFound from '../common/NoDataFound';
 import ReduceData from '../common/ReduceData';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import ReduceHiddenData from '../common/ReduceHiddenData';
 import ContextApi from '../context/ContextApi';
 import Indicator from '../common/ActivityIndicator';
+import BottomRow from '../common/BottomRow';
 
 const SwipDelete = () => {
-  const {array, DeleteData, AxiosCall, loading} = useContext(ContextApi);
+  const {array, DeleteData, loading} = useContext(ContextApi);
 
   return (
     <View style={{flex: 1}}>
@@ -35,27 +36,7 @@ const SwipDelete = () => {
           previewOpenDelay={2000}
         />
       )}
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          marginVertical: 5,
-        }}>
-        <Text style={{fontSize: 18}}>
-          Total Data : {array != null ? array.length : 0}
-        </Text>
-        <TouchableOpacity
-          style={{
-            padding: 5,
-            paddingHorizontal: 30,
-            borderRadius: 12,
-            backgroundColor: '#50575680',
-          }}
-          onPress={() => AxiosCall()}>
-          <Text style={{fontSize: 18, color: 'white'}}>Api Call</Text>
-        </TouchableOpacity>
-      </View>
+      <BottomRow />
     </View>
   );
 };

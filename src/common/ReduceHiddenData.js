@@ -39,9 +39,6 @@ const styles = StyleSheet.create({
   rightAction: {
     marginHorizontal: 10,
     borderRadius: 10,
-    padding: 5,
-    paddingLeft: 20,
-    paddingVertical: 10,
     marginVertical: 5,
     alignItems: 'center',
     justifyContent: 'center',
@@ -51,6 +48,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 16,
+    fontWeight: '600',
   },
 });
 
