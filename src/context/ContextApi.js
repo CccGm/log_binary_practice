@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
+import {ToastAndroid} from 'react-native';
 
 const ContextApi = React.createContext();
 
@@ -10,8 +12,29 @@ export const ContextProvider = ({children}) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    AxiosCall();
+    GetLocalData();
   }, []);
+
+  const GetLocalData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('localData');
+      if (value !== null) {
+        setArray(JSON.parse(value));
+      }
+    } catch (error) {
+      console.log('Get Data error', error);
+      ToastAndroid.show(error.message, ToastAndroid.SHORT);
+    }
+  };
+
+  const SetLocalData = async data => {
+    try {
+      await AsyncStorage.setItem('localData', data);
+    } catch (error) {
+      // Error saving data
+      console.log(error);
+    }
+  };
 
   const AxiosCall = async () => {
     setLoading(true);
@@ -20,14 +43,14 @@ export const ContextProvider = ({children}) => {
         'https://qaadmin.onzway.com/apis/get-orders-v3.json',
 
         {restaurant_id: '1', status: 4, page: 1, search: 'abc'},
-        {timeout: 8000},
       )
       .then(function (response) {
-        setArray(response.data.data.orderInfo.orders);
+        setArray(response.data?.data?.orderInfo?.orders);
+        SetLocalData(JSON.stringify(response.data?.data?.orderInfo?.orders));
         setLoading(false);
       })
       .catch(function (error) {
-        console.log(error);
+        ToastAndroid.show(error.message, ToastAndroid.SHORT);
         setLoading(false);
       });
   };
@@ -37,6 +60,7 @@ export const ContextProvider = ({children}) => {
     const prevIndex = array.findIndex(item => item.order_id === id);
     newData.splice(prevIndex, 1);
     setArray(newData);
+    SetLocalData(JSON.stringify(newData));
   };
 
   return (
